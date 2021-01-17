@@ -1,0 +1,41 @@
+.scene{
+    height: 100vh;
+    overflow: hidden; /*부모보다 자식이 더 큰 경우 방지*/
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 200;
+    align-self: center;
+}
+.scene.one{
+    background-image: url(../images/jessica-lewis--0ZrAvsFqSg-unsplash.jpg);
+}
+.scene.two{
+    background-image: url(../images/jessica-lewis-Rvu0r96dmAw-unsplash.jpg);
+}
+.scene.three{
+    background-image: url(../images/jessica-lewis-VKNcAxD0DWI-unsplash.jpg);
+}
+.scene main{
+    max-width: 50%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-40%);/*translateX(-50%) translateY(-50%) 가운데 정 */
+    font-size: 1rem;
+    text-align: center;
+    color: #534847;
+    text-shadow: 0 0 2px #f0f4f5;
+}
+.scene main h1{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.scene main h1:after{
+      content: '';
+      border-bottom: 1px solid #f0f4f5;
+      width: 20rem;
+      display: block;
+      margin:0 auto;
+      margin-top: 1rem;
+}

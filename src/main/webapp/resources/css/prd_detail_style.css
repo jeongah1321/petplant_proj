@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+body{
+    background-color: #eaeceb;
+	min-height: 300px;
+	border-top:5px solid #8CBA34;
+    font-family: 'Nunito', sans-serif;
+}
+main{
+	margin-top: 105px;
+}
+.wrapper{
+	display: flex;
+    justify-content: center;
+}
+.mainContent{
+	background-color: #fff;
+	padding: 30px;
+    width: 900px;
+    
+}
+main .hidden{
+	display: none;
+}
+/* --- table style ----------------------------------------------------------------------- */
+
+main .table {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	border-top: 2px solid darksalmon;
+    border-bottom: 2px solid darksalmon;
+    margin: 5px 0px;
+    padding: 5px;
+}
+
+main .table tr, main .table .tr {
+	display: table-row;
+	height: 35px;
+}
+
+/* --- 셀의 모양 -------------------------- */
+
+main .table td, 
+main .table th{
+	display: table-cell;
+	text-align: center;
+	border-bottom: 1px solid gray;
+}
+
+main .table .prd-img,
+main .table .description{
+    border-bottom: 1px solid #fff;
+}
+
+main .table th, main .table .th {
+	background: #f5f5f5;
+}
+
+main .table tr.content td,
+main .table .tr.conent td{
+	text-align: left;
+	padding: 10px;
+}
+
+main .table td.text-align-left{
+	text-align: left;
+    padding-left: 15px;
+}
+
+main .prd-ko_title{
+    padding-top: 10px;
+    font-size: 55px;
+    text-align: center;
+    color: darkslategray;
+    font-family: 'Do Hyeon', sans-serif;    
+}
+
+main .prd-en_title{
+    font-size: 30px;
+    text-align: center;
+    color: gray;
+    font-family: 'Amatic SC', cursive;
+}
+
+main .prd-img img{
+    width: 100%;
+    height: auto;
+    display : block;
+    margin : 0 auto;
+    padding: 15px 15px 15px 0px;
+}
+
+/* --- 목록 스타일 -------------------------- */
+.btn{
+	display: flex;
+	justify-content: center;
+	width:100%;
+	padding-top: 10px;
+}
+
+#btnList{
+	background-color: coral;
+    border-radius: 5px;
+    padding: 5px 15px;
+    color: white;
+    font-size: 13px;
+    border-style: none;
+}
+#btnList:hover:not(.active){
+    background-color: darksalmon;
+}
+
+#btnLike{
+	background-color: white;
+	border-radius: 5px;
+    color: gray;
+    font-size: 15px;
+    border-style: none;
+}
+#btnLike:hover:not(.active){
+    color: red;
+}

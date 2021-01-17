@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- CREATE TABLE `petplant`.`like` (
+  `like_id` INT NOT NULL,
+  `login_id` VARCHAR(45) NOT NULL,
+  `product_id` INT NOT NULL,
+  PRIMARY KEY (`like_id`),
+  INDEX `product_id_idx` (`product_id` ASC) VISIBLE,
+  INDEX `login_id_idx` (`login_id` ASC) VISIBLE,
+  CONSTRAINT `product_id`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `petplant`.`product` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `login_id`
+    FOREIGN KEY (`login_id`)
+    REFERENCES `petplant`.`member` (`login_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION); -->
+    
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="product"> 
+    <select id="listAll" resultType="com.petplant.web.model.product.dto.ProductDTO">
+        SELECT * FROM product
+        <include refid="search" />
+        ORDER BY product_id DESC
+        LIMIT #{start}, #{end}
+    </select>
+   
+    <select id="detail_product" resultType="com.petplant.web.model.product.dto.ProductDTO">
+        SELECT * FROM product
+        WHERE product_id = #{product_id}
+    </select>
+    
+    <!-- 상품 추가 -->
+    <insert id="insert">
+    	INSERT INTO product VALUES 
+    	(#{product_id}, #{product_name_ko}, #{product_name_en}, #{classification}, 
+    	#{origin}, #{difficulty}, #{description}, #{picture_url})
+    </insert>
+    
+    <!-- 상품 수정 -->
+    <update id = "update_product">
+		UPDATE product
+		SET product_name_ko = #{product_name_ko},
+			product_name_en = #{product_name_en},
+		    classification = #{classification}, 
+		    origin = #{origin}, 
+		    difficulty = #{difficulty}, 
+		    description = #{description},
+		    picture_url = #{picture_url}
+		WHERE product_id = #{product_id}
+    <!-- 상품 id와 맞는 상품의 가격, 설명, 사진을 갱신하는 쿼리문 -->
+	</update>
+	
+	<!-- 이미지 검색 -->
+	<select id = "file_info" resultType="String">
+	    SELECT picture_url FROM product
+	    WHERE product_id = #{product_id}
+	    <!-- product테이블안에 있는 입력된 id에 해당하는 이미지를 검색하는 쿼리문  -->
+	</select>
+	
+	<!-- 상품 삭제 -->
+	<delete id = "product_delete">
+    	DELETE FROM product WHERE product_id = #{product_id}
+    <!-- product테이블안에 있는 상품번호가 ?인 객체를 삭제하는 쿼리문 -->    
+	</delete>
+	
+	<!-- 레코드 개수 계산 -->    
+	<select id="countArticle" resultType="int">
+		SELECT COUNT(*) FROM product
+		<include refid="search" />
+	</select>
+ 
+ 	<!-- 검색 기능 -->
+	<sql id="search">
+		<choose>
+		<!--검색옵션을 설정 글내용과, 작성자, 제목으로 검색할 수있도록 설정)-->
+		<!--검색 옵션에 따라 실행되는 구문이 틀려짐-->
+			<when test="search_option == 'all' ">
+			<!-- 검색 옵션이 all이면 실행 -->
+				WHERE product_name_ko LIKE CONCAT('%',#{keyword},'%')
+						OR product_name_en LIKE CONCAT('%',#{keyword},'%')
+						OR classification LIKE CONCAT('%',#{keyword},'%')
+						OR difficulty LIKE CONCAT('%',#{keyword},'%')
+			</when>
+			<otherwise>
+			<!-- 검색 옵션이 all이 아니면 실행되는 구문 -->
+				WHERE ${search_option} LIKE CONCAT('%',#{keyword},'%')
+			</otherwise>
+			</choose>
+	</sql>
+</mapper>

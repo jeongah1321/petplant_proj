@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="like">
+
+    <!-- 개인별 목록 -->
+    <select id="listAll" resultType="com.petplant.web.model.product.dto.LikeDTO">
+    	SELECT like_id, p.product_id, l.login_id, login_name, like_check, 
+    	product_name_ko, product_name_en, classification, difficulty, picture_url
+    	FROM member m, tb_like l, product p
+    	WHERE m.login_id=l.login_id AND l.product_id=p.product_id AND l.login_id=#{login_id}
+    	ORDER BY like_id
+    </select>
+    
+	<!-- 추가 --> 
+    <insert id="insert">
+        INSERT INTO tb_like (like_id, login_id, product_id)
+        values (#{like_id}, #{login_id}, #{product_id})
+    </insert> 
+
+    <!-- 개별 삭제 -->
+    <delete id="delete">
+        DELETE FROM tb_like WHERE like_id=#{like_id}
+    </delete>
+    
+    <!-- 전체 삭제 -->
+    <delete id="deleteAll">
+        DELETE FROM tb_like WHERE login_id=#{login_id}
+    </delete>
+       
+    <!-- 동일한 아이템 레코드 확인 -->
+    <select id="countLike" resultType="int">
+    	SELECT COUNT(*) FROM tb_like
+    	WHERE login_id=#{login_id} AND product_id=#{product_id}
+    </select> 
+     
+     <!-- 동일한 아이템이 존재하면 수정 -->
+     <update id="update">
+     	UPDATE tb_like SET like_check = #{like_check} + 1
+     	WHERE login_id=#{login_id} AND product_id=#{product_id}
+     </update>
+  
+</mapper>

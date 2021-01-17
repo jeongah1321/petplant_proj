@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+body{
+    background-color: #eaeceb;
+	min-height: 300px;
+	border-top:5px solid #8CBA34;
+    font-family: 'Nunito', sans-serif;
+}
+
+main{
+	margin-top: 105px;
+}
+.wrapper{
+	display: flex;
+    justify-content: center;
+}
+.mainContent{
+	background-color: #fff;
+	padding: 30px;
+    width: 800px;
+}
+main .hidden{
+	display: none;
+}
+
+.main .notice a{
+    color: #393939;
+}
+/* --- search-form ----------------------------------------------------------------------------------------- */
+
+main .search-form form {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0px 0px 5px 0px ;
+}
+
+main .search-form fieldset{
+    border: 1px solid #fff;
+}
+
+main .search-form select {
+	height: 23px;
+	border: 1px solid darksalmon;
+}
+
+main .search-form input[type="text"] {
+	width: 150px;
+	height: 23px;
+	border: 1px solid darksalmon;
+}
+
+/* --- btn-form ----------------------------------------------------------------------------------------- */
+.btn{
+	width:100%;
+	text-align:center;
+	padding-top: 20px;
+}
+#btnList{
+	background-color: coral;
+    border-radius: 5px;
+    padding: 5px 15px;
+    color: white;
+    font-size: 13px;
+    border-style: none;
+}
+#btnList:hover:not(.active){
+    background-color: darksalmon;
+}
+#btnUpdate{
+	background-color: darkgray;
+    border-radius: 5px;
+    padding: 5px 15px;
+    color: white;
+    font-size: 13px;
+    border-style: none;
+}
+#btnUpdate:hover:not(.active){
+    background-color: gray;
+}
+#btnDelete{
+	background-color: darkgray;
+    border-radius: 5px;
+    padding: 5px 15px;
+    color: white;
+    font-size: 13px;
+    border-style: none;
+}
+#btnDelete:hover:not(.active){
+    background-color: gray;
+}
+ /* --- table style ----------------------------------------------------------------------- */
+
+main .table {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	border-top: 2px solid darksalmon;
+}
+
+main .table tr, main .table .tr {
+	display: table-row;
+	height: 35px;
+}
+
+main .table tr.content, main .table .tr.conent {
+	display: table-row;
+	height:auto;
+	min-height: 200px;	
+	line-height: 35px;
+	color: #393939;	
+}
+/* --- 셀의 모양 -------------------------- */
+main .table td, 
+main .table th, 
+main .table .td,
+main .table .th {
+	display: table-cell;
+	text-align: center;
+	border-bottom: 1px solid darkgray;
+}
+main .table th, main .table .th {
+	background: #f5f5f5;
+}
+main .table th.w40, main .table td.w40 {
+	width: 40px;
+}
+main .table th.w60, main .table td.w60 {
+	width: 60px;
+}
+main .table th.w100, main .table td.w100 {
+	width: 100px;
+}
+main .table th.w130, main .table td.w130 {
+	width: 130px;
+}
+main .table td.text-align-left{
+	text-align: left;
+    padding-left: 15px;
+}
+main .table td a{
+	color: #393939;
+}
+main .table td a:hover:not(.active){
+    color: cadetblue;
+}

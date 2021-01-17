@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="reply">
+	
+	<!-- 댓글 작성  -->
+	<insert id="insertReply">
+		INSERT INTO reply
+		(rno,bno,replytext,replyer,secret_reply) VALUES
+		(#{rno}, #{bno}, #{replytext}, #{replyer}, #{secretReply})
+		<!-- insert into reply
+		(rno,bno,replytext,replyer) values
+		(reply_seq.nextval, #{bno}, #{replytext}, #{replyer}) -->
+	</insert>
+
+	<!-- 댓글 개수(for 페이징 처리) -->
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM reply WHERE bno=#{bno}
+	</select>
+	
+	<!-- 댓글 목록 -->
+	<select id="listReply" resultType="com.petplant.web.model.board.dto.ReplyDTO">
+	<!-- 댓글의 작성자와 회원 아이디가 같고, 글번호가 같을 경우에 댓글 리스트를 검색 (내림차순으로)-->
+        <!-- SELECT rno,bno,replyer,regdate,updatedate,name,replytext 
+        FROM reply r, member m
+        WHERE r.replyer=m.userid AND bno=#{bno}
+        ORDER BY rno -->
+		<include refid="paging_header" />
+		SELECT rno,bno,replytext,replyer,m.login_name,r.regdate,r.updatedate,secret_reply As secretReply,
+		(SELECT writer FROM board WHERE bno=r.bno) writer 
+        FROM reply r, (SELECT * FROM member UNION SELECT * FROM admin) m
+        WHERE r.replyer=m.login_id AND bno=#{bno}
+        ORDER BY rno DESC
+        <include refid="paging_footer" />
+    </select>
+    
+    <!-- 댓글 상세보기 -->
+    <select id="detailReply" resultType="com.petplant.web.model.board.dto.ReplyDTO">
+    	SELECT rno,bno,replytext,replyer,regdate,updatedate,secret_reply AS secretReply
+    	FROM reply
+    	WHERE rno=#{rno}
+    </select>
+    
+    <!-- 댓글 수정 -->
+    <select id="updateReply">
+    	UPDATE reply
+    	SET replytext=#{replytext}
+    	WHERE rno=#{rno}
+    </select>
+    
+    <!-- 댓글 삭제 -->
+    <delete id="deleteReply">
+    	DELETE FROM reply
+    	WHERE rno=#{rno}
+    </delete>
+    
+    <!-- 페이징 sql -->
+    <sql id="paging_header">
+		SELECT @ROWNUM:=@ROWNUM+1 as rn, A.*
+			FROM(
+    </sql>
+    
+    <sql id="paging_footer">
+            )A 
+		LIMIT #{start}, #{end}
+    </sql>
+    
+</mapper>

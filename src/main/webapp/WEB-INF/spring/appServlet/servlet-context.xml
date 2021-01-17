@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+ 	<resources location="/resources/images/" mapping="/images/**" />	
+	<resources location="/resources/css/" mapping="/css/**" />
+	<resources location="/resources/js/" mapping="/js/**" />
+	
+	<resources location="/WEB-INF/views/include/" mapping="/include/**" />
+	<resources location="/WEB-INF/views/json/" mapping="/json/**" />
+	<resources location="/WEB-INF/views/ckeditor/" mapping="/ckeditor/**" />
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 스프링 빈을 태그로 등록하지 않고 자동으로 검색(auto scan) -->	
+	<context:component-scan base-package="com.petplant.web" />
+	
+	<!-- 파일업로드에 필요한 bean -->
+	<beans:bean id="multipartResolver" class= "org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 파일업로드 최대 용량(byte) -->
+        <beans:property name="maxUploadSize" value="10485760" />
+    </beans:bean>
+    <!-- 파일업로드를 위한 디렉토리 설정 : 외부 저장소 사용 -->
+    <!-- String uploadPath = new String("d/upload"); -->
+    <beans:bean id="uploadPath" class="java.lang.String">
+        <beans:constructor-arg value="/Users/jeongahkim/Desktop/web_uploads/uploads" />
+    </beans:bean>
+
+		<!-- 인터셉터 빈을 등록 -->
+	<beans:bean id="loginInterceptor" class="com.petplant.web.interceptor.LoginInterceptor" />
+	<beans:bean id="adminInterceptor" class="com.petplant.web.interceptor.AdminInterceptor" />
+	<!-- id에는 클래스이름에다가 첫글자만 소문자로 된 것을 많이 사용한다. 클래스에는 정확한 경로를 적어야 한다. -->
+	
+	<!-- 인터셉터 호출을 위한 url mapping -->
+	<!-- write.do나 insert.do를 호출하면 loginInterceptor 한번 거쳐 가라는 뜻-->
+		<interceptors>
+		
+			<interceptor>    
+			<!-- 그러니까 아래와 같은 url로(list.do, insert.do) 접속했을때 loginInterceptor를 적용시키라는 의미 -->
+				<mapping path="/board/write.do" />
+				<mapping path="/board/insert.do" />
+				<mapping path="/board/update.do" />
+				<mapping path="/board/delete.do" />
+ 				<mapping path="/like/list.do"/>
+				<mapping path="/like/insert.do"/>
+				<mapping path="/like/delete.do"/>
+				<mapping path="/like/deleteAll.do"/>
+				
+				<beans:ref bean="loginInterceptor"/>
+			</interceptor>
+
+			<!-- 관리자 세션 체크를 위한 인터셉터 설정 -->
+			<interceptor>
+				<!-- <mapping path="/pdf/list.do"/> -->
+				<mapping path="/product/write.do"/>
+				<mapping path="/product/insert.do"/>
+				<mapping path="/product/delete.do"/>
+				
+				<beans:ref bean="adminInterceptor" />
+			</interceptor>
+			
+    	</interceptors>
+    	
+</beans:beans>

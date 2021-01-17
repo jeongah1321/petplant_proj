@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="member">
+	<select id="list" resultType="com.petplant.web.model.member.dto.MemberDTO">
+		SELECT * FROM member ORDER BY login_name
+	</select>
+	
+	<!-- 로그인 체크 -->
+	<select id="login_check" resultType="String">
+		SELECT login_name FROM member
+		WHERE login_id=#{login_id} AND login_passwd=#{login_passwd}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insert">
+		INSERT INTO member (login_id,login_passwd,login_name,email)
+		VALUES
+		(#{login_id},#{login_passwd},#{login_name},#{email})
+	</insert>
+
+	<!-- 로그인 아이디 찾기 -->
+	<select id="findLoginId" resultType="String">
+		SELECT login_id FROM member 
+		WHERE login_name=#{login_name} AND email=#{email}
+	</select>
+	
+	<!-- 로그인 비밀번호 찾기 -->
+	<select id="findLoginPasswd" resultType="String">
+		SELECT login_passwd FROM member 
+		WHERE login_id=#{login_id} AND login_name=#{login_name} AND email=#{email}
+	</select>
+	
+	<!-- 로그인 비밀번호 변경 -->
+	<update id="updateLoginPasswd">
+		UPDATE member
+		SET login_passwd=#{login_passwd}
+		WHERE login_id=#{login_id}
+	</update>
+	
+</mapper>

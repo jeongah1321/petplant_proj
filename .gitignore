@@ -1,0 +1,5 @@
+# ignore properties file
+config.properties
+
+### STS
+target/

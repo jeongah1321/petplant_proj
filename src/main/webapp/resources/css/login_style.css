@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+/* Global */
+:root{
+    --background-start: #5433FF;
+    --input-color-point: #20BDFF;
+    --gray-color: #eee;
+    --input-color: #e4eff8;
+    --label-color: #999;
+    --login-button: #20BDFF;
+}
+
+body{
+    background-color: #eaeceb;
+}
+
+.wrapper{
+    font-family: 'Nunito', sans-serif;
+    margin-top: 105px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content{
+    background-color: #fff;
+    padding: 30px 15px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content header h1{
+    margin-top: 0;
+    font-size: 230%;
+}
+/*----------------- login ------------------*/
+.content .loginForm{
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.input-group{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 200%;
+    max-width: 310px;
+}
+
+.input-group input{
+    padding: 15px;
+    font-size: 15px;
+    border: 1px solid var(--input-color);
+    background-color: var(--input-color);
+    border-radius: 50px;
+}
+
+.input-group input:focus {
+    outline: 0;
+    border-color: var(--input-color-point);
+}
+
+.input-group label{
+    color: var(--label-color);
+    font-size: 15px;
+    margin-bottom: 3px;
+    margin-left: 16px;
+}
+
+.input-group button{
+    border: unset;
+    margin-top: 15px;
+    padding: 15px;
+    width: 100%;
+    background: transparent;
+    border-radius: 50px;
+    font-size: 15px;
+    color: #ffff;
+    cursor: pointer;
+    background-color: #20BDFF;
+}
+
+.content button:focus{
+     outline: none;
+}
+
+.wrapper footer {
+    padding-top: 15px;
+    text-align: center;
+}
+
+.wrapper footer a{
+    color: #999;
+    text-decoration: none;
+    font-size: 13px;
+}

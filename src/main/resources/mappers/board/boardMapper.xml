@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="board">
+
+	<!-- 게시판 목록 -->
+	<select id="listAll" resultType="com.petplant.web.model.board.dto.BoardDTO">
+	<!-- 결과는 boardDTO타입이 된다. -->
+		<!-- SELECT bno,title,writer,regdate,viewcnt                    
+		FROM board
+		ORDER BY bno DESC -->
+		<!-- board 테이블과 member 테이블 join -->
+		<!-- SELECT bno,title,writer,name,regdate,viewcnt
+		FROM board b, member m
+		WHERE b.writer=m.userid
+		ORDER BY bno desc; -->
+		
+		<include refid="paging_header" />
+		<!-- ref는 다른 테이블을 의미한다. -->
+		<!-- 번호, 제목, 작성자, 이름, 날짜, 조회수 , 그리고 댓글의 개수를 검색 -->
+		<!-- board 테이블과 member 테이블로 부터 검색 -->
+			SELECT bno,title,writer,m.login_name,regdate,viewcnt,board_show,
+			(SELECT COUNT(*) FROM reply WHERE bno=b.bno) cnt<!-- 댓글의 개수 -->
+			FROM board b, (SELECT * FROM member UNION SELECT * FROM admin) m
+ 
+		<!-- bno의 내림차순으로 검색 -->
+		<include refid="search" />
+			ORDER BY bno DESC 
+		<include refid="paging_footer" />
+	</select>
+ 
+	<sql id="paging_header">
+	<!-- 게시물을 한페이지에 10개씩 볼 수 있게하는 쿼리 윗부분-->
+        SELECT @ROWNUM:=@ROWNUM+1 as rn, A.*
+        	FROM(  
+    </sql>
+    
+	<sql id="paging_footer">
+	<!-- 게시물을 한페이지에 10개씩 볼 수 있게하는 쿼리  아랫 부분-->
+	<!-- 새로 매겨진 일련번호 1~10번 글까지 1페이지 -->
+	<!-- 11~20번 글까지 2페이지.. -->
+            )A 
+		LIMIT #{start}, #{end}
+    </sql>
+	
+	<!-- 레코드 개수 계산 -->    
+	<select id="countArticle" resultType="int">
+		<!-- SELECT COUNT(*)
+		FROM board b, member m -->
+		SELECT COUNT(*)
+		FROM board b, (SELECT * FROM member UNION SELECT * FROM admin) m
+		<include refid="search" />
+	</select>
+ 
+	<!-- 검색 기능 -->
+	<sql id="search">
+		<choose>
+		<!--검색옵션을 설정 글내용과, 작성자, 제목으로 검색할 수있도록 설정)-->
+		<!--검색 옵션에 따라 실행되는 구문이 틀려짐-->
+			<when test="search_option == 'all' ">
+			<!-- 검색 옵션이 all이면 실행 -->
+				<!-- WHERE b.writer = m.login_id 
+					AND (writer LIKE CONCAT('%',#{keyword},'%')
+						OR content LIKE CONCAT('%' ,#{keyword},'%')
+						OR title LIKE CONCAT('%' ,#{keyword},'%')) -->
+				WHERE (b.writer = m.login_id)
+					AND (writer LIKE CONCAT('%',#{keyword},'%')
+						OR content LIKE CONCAT('%',#{keyword},'%')
+						OR title LIKE CONCAT('%',#{keyword},'%'))
+			</when>
+			<otherwise>
+			<!-- 검색 옵션이 all이 아니면 실행되는 구문 -->
+				<!-- WHERE b.writer = m.login_id 
+					AND ${search_option} LIKE CONCAT('%', #{keyword}, '%') -->
+				WHERE (b.writer = m.login_id)
+					AND ${search_option} LIKE CONCAT('%',#{keyword},'%')
+			</otherwise>
+			</choose>
+	</sql>
+
+	<!-- 게시판 글쓰기 -->
+	<insert id="insert">
+		INSERT INTO board (`bno`, `title`, `content`, `writer`, `board_show`) VALUES
+		(#{bno}, #{title}, #{content}, #{writer}, 'y')
+		<!-- oracle -->
+		<!-- 시퀀스 사용 : 파일 업로드처리 구현 전의 게시글 입력 쿼리 
+		insert into board (bno,title,content,writer,show) values
+		((SELECT NVL(MAX(bno)+1,1)FROM board), #{title}, #{content}, #{writer}, 'y') -->
+		<!-- 시퀀스 사용 : 파일 업로드 처리 구현 후의 게시글 입력 쿼리 
+		insert into board (bno,title,content,writer,show) values
+		(seq_board.nextval, #{title}, #{content}, #{writer}, 'y') -->		
+	</insert>
+	
+	<!-- 조회수 증가 처리 -->
+	<update id="increaseViewcnt">
+		<!-- 글번호에 해당하는 조회수를 +1하는 쿼리문 -->
+		UPDATE board SET viewcnt=viewcnt+1
+		WHERE bno=#{bno}
+	</update>
+	
+	<!-- 게시물 내용 -->
+	<select id="read" resultType="com.petplant.web.model.board.dto.BoardDTO">
+		<!-- board테이블의 작성자와 member테이블의 유저아이디가 같고, 글번호가 클릭한 글번호와 같은 -->
+		<!-- 글번호, 제목, 조회수, 날짜, 내용, 이름, 작성자를 검색 -->
+		SELECT bno,title,regdate,content,viewcnt,m.login_name,writer,board_show
+		FROM board b, (SELECT * FROM member UNION SELECT * FROM admin) m
+		WHERE b.writer=m.login_id AND bno=#{bno}    
+    </select>
+	
+	<!-- 게시물 첨부파일 추가 -->    
+	<insert id="addAttach">
+		<!-- attach테이블에 입력받은 파일이름과 게시글 번호를 삽입한다 -->
+		INSERT INTO attach (fullName, bno) VALUES
+		( #{fullName}, (select * from (select max(bno) from board) next))
+		<!-- oracle
+ 		INSERT INTO attach (fullName, bno) VALUES
+		( #{fullName}, seq_board.CURRVAL) 
+		// CURRVAL은 현재 시퀸스의 값을 의미함 -->
+	</insert>
+	
+	<!-- 게시물 첨부파일 업데이트처리(입력처리) -->    
+	<insert id="updateAttach">
+		<!-- attach테이블에 입력받은 파일이름과 게시글 번호를 삽입한다 -->
+		INSERT INTO attach (fullName, bno) VALUES
+		( #{fullName}, #{bno} )
+		<!-- oracle
+ 		INSERT INTO attach (fullName, bno) VALUES
+		( #{fullName}, #{bno}) -->
+	</insert>
+	
+	<!-- 게시글의 첨부파일 삭제처리 -->
+	<delete id="deleteAttach">
+		DELETE FROM attach WHERE fullname=#{fullname}
+	</delete>
+	
+	<!-- 게시물 내용 수정 -->
+	<update id="update">
+		<!-- 게시글의 내용 수정, 게시글 번호가 맞으면 제목과 내용을 입력한 대로 수정해서 갱신함 -->
+		UPDATE board
+		SET title=#{title}, content=#{content}
+		WHERE bno=#{bno}
+	</update>
+	
+	<!-- 게시물을 DB에서 영구 삭제 -->
+	<!-- <delete id="delete">
+		DELETE FROM board WHERE bno=#{bno}
+	</delete> -->
+	
+	<!-- 게시물을 삭제처리하지 않고, 삭제의 유무 상태만 변경 -->
+	<update id="delete">
+		UPDATE board SET `board_show`='n' WHERE `bno`=#{bno}
+	</update>
+	
+	<!-- 첨부파일 목록 -->
+	<select id="getAttach" resultType="String"> <!-- 결과타입은 필드가 1개이므로 String -->
+		<!-- attach 테이블에서 첨부파일이름을 검색(단, 글번호가 내가 선택한 글번호여야됨) 그리고 날짜의 내림차순으로 정렬시킴 -->
+		SELECT fullName  
+		FROM attach
+		WHERE bno=#{bno}
+		ORDER BY regdate DESC
+	</select>
+	
+</mapper>

@@ -1,0 +1,42 @@
+body{
+    height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+    align-self: center;
+    background-image: url(src/parallax/img/nordwood-themes-kRNZiGKtz48-unsplash.jpg); 
+}
+
+main{
+    margin-top: 130px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#columns{
+    column-width:500px;
+    column-gap: 15px;
+    
+}
+
+#columns figure{
+    display: inline-block;
+    margin:0;
+    margin-bottom: 15px;
+    padding:10px;
+    background-color: #f0f4f5;
+}
+
+#columns figure img{
+    width:100%;
+    padding:10px;
+}
+
+#columns figure figcaption{
+    padding:20px;
+    margin-top:11px;
+    color: #534847;
+}
+#columns figure figcaption h2{
+    color: darkgreen;
+    border-bottom: 2px dashed darkgreen;
+}
