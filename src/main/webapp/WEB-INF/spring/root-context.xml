@@ -9,12 +9,15 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 	
+	<!-- config 파일 자동 로드 location="classpath:database.properties -->
+	<context:property-placeholder location="/config/*.properties" />
+	
 	<!-- Root Context: defines shared resources visible to all other web components -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost/petplant?serverTimezone=Asia/Seoul" /> <!-- web은 데이터베이스명 -->
-        <property name="username" value="root"></property>   
-        <property name="password" value="my442300"></property>
+        <property name="driverClassName" value="${spring.datasource.driverClassName}" />
+        <property name="url" value="${spring.datasource.url}" /> <!-- web은 데이터베이스명 -->
+        <property name="username" value="${spring.datasource.username}"></property>   
+        <property name="password" value="${spring.datasource.password}"></property>
     </bean>
     
     <!-- SqlSessionFactory 객체 주입 -->
