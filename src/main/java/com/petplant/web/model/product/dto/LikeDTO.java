@@ -3,7 +3,7 @@ package com.petplant.web.model.product.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 public class LikeDTO {
-    private int like_id; //카트에 담기는 아이템 번호?
+    private int like_id; // 좋아요한 개수 
     private String login_id;
     private String login_name;
     private int product_id;
@@ -15,7 +15,6 @@ public class LikeDTO {
     private MultipartFile file1;
     private int like_check;
 	
-	// Getters and Setters
 	public int getLike_id() {
 		return like_id;
 	}
@@ -82,15 +81,12 @@ public class LikeDTO {
 	public void setLike_check(int like_check) {
 		this.like_check = like_check;
 	}
-	// toStirng
-    @Override
+
+	@Override
 	public String toString() {
 		return "LikeDTO [like_id=" + like_id + ", login_id=" + login_id + ", login_name=" + login_name + ", product_id="
 				+ product_id + ", product_name_ko=" + product_name_ko + ", product_name_en=" + product_name_en
 				+ ", classification=" + classification + ", difficulty=" + difficulty + ", picture_url=" + picture_url
 				+ ", file1=" + file1 + ", like_check=" + like_check + "]";
 	}
-
-
-
 }

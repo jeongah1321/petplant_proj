@@ -10,7 +10,6 @@ public class MemberDTO {
 	private String email;
 	private Date join_date; // java.util.Date
 	
-	// Getters and Setters
 	public String getLogin_id() {
 		return login_id;
 	}
@@ -51,7 +50,6 @@ public class MemberDTO {
 		this.join_date = join_date;
 	}
 	
-	// toString()
 	@Override
 	public String toString() {
 		return "MemberDTO [login_id=" + login_id + ", login_passwd=" + login_passwd + ", login_name=" + login_name

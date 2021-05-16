@@ -5,25 +5,34 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import com.petplant.web.model.admin.AdminDAO;
-import com.petplant.web.model.member.dto.MemberDTO;
+import com.petplant.web.model.admin.dao.AdminDAO;
+import com.petplant.web.model.admin.dto.AdminDTO;
 
-@Service // service이므로 service어노테이션을 사용함
+@Service
 public class AdminServiceImpl implements AdminService {
 
 	@Inject
-	AdminDAO adminDao; // dao를 호출해야하므로 inject로 의존성을 주입하고 사용
+	AdminDAO adminDao;
 	
 	/** 로그인 **/
 	@Override
-	public String loginCheck(MemberDTO dto, HttpSession session) {
-		return adminDao.loginCheck(dto); 
+	public AdminDTO loginCheck(AdminDTO dto, HttpSession session) {
+		
+		AdminDTO resultDTO = adminDao.loginCheck(dto);
+		System.out.println(dto);
+		
+		if(resultDTO != null) {
+			session.setAttribute("aresultDTO", resultDTO);
+			
+			return resultDTO;
+		}	
+		return null;
 	}
 	
 	/** 로그아웃 **/
 	@Override
 	public void logout(HttpSession session) {
-		// 세션을 모두 초기화시킴 
+		
 		session.invalidate();
 	}
 

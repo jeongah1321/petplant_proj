@@ -17,9 +17,6 @@ public class Pager {
     private int blockBegin; // 블록의 시작페이지 번호
     private int blockEnd; // 블록의 끝페이지 번호
     
-    // 생성자 해당 클래스의 인스턴스가 만들어질때 딱한번만 수행됩니다. 
-    // 주로 private로 선언된 멤버변수의 초기화를 위해 사용됩니다. 
-    // Pager(레코드 개수, 출력할 페이지 번호)
     public Pager(int count, int curPage) {
         curBlock = 1; // 현재 블록 번호
         this.curPage = curPage; // 현재 페이지 번호
@@ -46,7 +43,6 @@ public class Pager {
         if(nextPage >= totPage) nextPage = totPage;
     }
     
-// where rn between #{start} and #{end}에 입력될 값        
     public void setPageRange() {
 	// 시작번호 = (현재페이지-1)x페이지당 게시물수
 	// 끝번호 = 페이지당 게시물수     
@@ -86,8 +82,7 @@ public class Pager {
     }
     // 페이지 블록의 개수 계산(총 100페이지라면 10개의 블록)
     public void setTotBlock() {
-        // 전체 페이지 갯수 / 10
-        // 91 / 10 => 9.1 => 10개
+        // 전체 페이지 갯수 / 10 ; 91 / 10 => 9.1 => 10개
         totBlock = (int)Math.ceil(totPage*1.0 / BLOCK_SCALE);
     }
     public int getCurBlock() {

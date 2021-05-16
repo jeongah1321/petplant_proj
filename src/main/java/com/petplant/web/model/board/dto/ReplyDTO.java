@@ -13,7 +13,6 @@ public class ReplyDTO {
 	private String secretReply; //비밀댓글 여부
 	private String writer; //member 테이블의 id
 	
-	// Getters and Setters
 	public int getRno() {
 		return rno;
 	}
@@ -69,7 +68,6 @@ public class ReplyDTO {
 		this.writer = writer;
 	}
 
-	// toString
 	@Override
 	public String toString() {
 		return "ReplyDTO [rno=" + rno + ", bno=" + bno + ", replytext=" + replytext + ", replyer=" + replyer

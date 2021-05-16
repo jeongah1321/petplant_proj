@@ -46,7 +46,8 @@ $(function(){
 					    <!-- form을 실행한다.  -->
 					    <!-- form의 id를 form1로 하고, method 방식을 post로 한다. 그리고 update.do페이지로 이동시킨다. -->
 					        ${map.count}개의 관심식물이 있습니다.
-					        <form id="likeList_form" name="likeList_form" method="post" action="${path}/like/update.do">
+					        <form id="likeList_form" name="likeList_form" method="post" action="${path}/like/deleteAll.do">
+					            <input type="hidden" name="login_id" value="${sessionScope.resultDTO.login_id}"/>
 					            <table class="table">
 				            		<thead>		                
 					            		<tr>
@@ -78,7 +79,7 @@ $(function(){
 						            </c:forEach>
 					                </tbody>
 					            </table>
-								<button type="button" id="btnDelete">비우기</button>
+								<button type="submit" id="btnDelete">비우기</button>
 					        </form>
 					    </c:otherwise>
 					</c:choose>

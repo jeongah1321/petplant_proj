@@ -18,15 +18,13 @@ $(function(){
         if(login_id==""){
             alert("로그인 아이디를 입력하세요.");
             $("#login_id").focus();
-            return;
+            /* return; */
         }
         if(login_passwd==""){
             alert("로그인 비밀번호를 입력하세요.");
             $("#login_passwd").focus();
-            return;
+            /* return; */
         }
-        document.loginForm.action="${path}/admin/login_check.do";
-        document.loginForm.submit();
     });
 });
 </script>
@@ -43,7 +41,7 @@ $(function(){
                </header>
                
                <section>
-                    <form name="loginForm" class="loginForm" method="POST">
+                    <form name="loginForm" class="loginForm" method="POST"  action="/admin/login.do">
                         <div class="input-group">
 	                        <label for="loginId">아이디</label>
 							<input autocomplete="off" type="text" id="login_id" name="login_id" required="required" autofocus="autofocus" maxlength="30" placeholder="아이디 입력" />                        
@@ -71,7 +69,7 @@ $(function(){
 				                </div>
                             </c:if>
                             
-                            <button type="button" id="btnLogin" value="로그인"><strong>Login</strong></button>
+                            <button type="submit" id="btnLogin" value="로그인"><strong>Login</strong></button>
 				            
                         </div>
                     </form>

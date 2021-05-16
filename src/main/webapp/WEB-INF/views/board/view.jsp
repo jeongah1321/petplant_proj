@@ -266,7 +266,7 @@ function listAttach(){
 							        <input type="hidden" name="bno" value="${dto.bno}">
 							        
 							        <!-- 본인만 수정,삭제 버튼 표시 -->
-							        <c:if test="${sessionScope.login_id == dto.writer || sessionScope.admin_login_id == dto.writer}">
+							        <c:if test="${sessionScope.resultDTO.login_id == dto.writer || sessionScope.aresultDTO.login_id == dto.writer}">
 							            <button type="button" id="btnUpdate">수정</button>
 							            <button type="button" id="btnDelete">삭제</button>
 							        </c:if>
@@ -292,7 +292,7 @@ function listAttach(){
 					<!-- 댓글 작성 -->
 					<div class="reply-form" style="width: 100%; text-align: center;">
 						<!-- 로그인 한 회원에게만 댓글 작성폼이 보이게 처리 -->
-						<c:if test="${sessionScope.login_id != null || sessionScope.admin_login_id != null}">
+						<c:if test="${sessionScope.resultDTO.login_id != null || sessionScope.aresultDTO.login_id != null}">
 							<c:if test="${dto.board_show == 'y'}">
 								<textarea style="width:100%; height:100px;" id="replytext" placeholder="댓글을 작성하세요"></textarea>
 								<br>

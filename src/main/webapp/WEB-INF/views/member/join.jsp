@@ -23,39 +23,37 @@
                </header>
                
                <section>
-                    <form name="joinForm" class="joinForm" method="POST">
+                    <form name="joinForm" class="joinForm" method="POST" action="/member/insert.do"  novalidate="novalidate">
                         <div class="input-group">
 	                        <label for="loginId">아이디</label>
-							<input autocomplete="off" type="text" id="login_id" name="login_id" required="required" autofocus="autofocus" maxlength="30" placeholder="4~10자 영어 소문자+숫자 조합" />                        
+							<input autocomplete="off" type="text" id="login_id" name="login_id" value="" required="required" autofocus="autofocus" maxlength="30" placeholder="4~10자 영어 소문자+숫자 조합" />                        
 						</div>
 						
                         <div class="input-group">
 	                        <label for="loginPasswd">비밀번호</label>
-							<input autocomplete="off" type="password" id="login_passwd" name="login_passwd" required="required" maxlength="30" placeholder="6~12자 영어 소문자+숫자 조합" />
+							<input autocomplete="off" type="password" id="login_passwd" name="login_passwd" value="" required="required" maxlength="30" placeholder="6~12자 영어 소문자+숫자 조합" />
 						</div>
                         
                         <div class="input-group">
                         	<label for="loginPasswdConfirm">비밀번호 재확인</label>
-							<input autocomplete="off" type="password" id="login_passwd_confirm" name="login_passwd_confirm" required="required" maxlength="30" placeholder="비밀번호 재확인" />
+							<input autocomplete="off" type="password" id="login_passwd_confirm" name="login_passwd_confirm" value="" required="required" maxlength="30" placeholder="비밀번호 재확인" />
                         </div>
                         
                         <div class="input-group">
                         	<label for="loginName">이름</label>
-							<input autocomplete="off" type="text" id="login_name" name="login_name" required="required" maxlength="30" placeholder="이름" />
+							<input autocomplete="off" type="text" id="login_name" name="login_name" value="" required="required" maxlength="30" placeholder="이름" />
                         </div>
                         
                         <div class="input-group">
                         	<label for="e-mail">이메일</label>
-							<input autocomplete="off" type="email" id="email" name="email" required="required" maxlength="50" placeholder="이메일" />
+							<input autocomplete="off" type="email" id="email" name="email" value="" required="required" maxlength="50" placeholder="이메일" />
                         </div>
                         
                         <div class="input-group">
-                            <button type="button" id="btnJoin" value="회원가입">Join</button>
+                            <button type="submit" id="btnJoin" value="submit">Join</button>
                         </div>
                     </form>
                 </section>
-                
-            </div>
         </section>
     </main>    
     

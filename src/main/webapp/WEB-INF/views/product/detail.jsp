@@ -29,9 +29,10 @@
             <div class="prd-en_title text-align-center">${dto.product_name_en}</div>
             
             <div id="like_form">
-	            <c:if test="${sessionScope.login_id != null}">
+	            <c:if test="${sessionScope.resultDTO.login_id != null}">
 	              	<form id="form" name="form" method="post" action="${path}/like/insert.do" style="text-align: right;">
 		                <input type="hidden" name="product_id" value="${dto.product_id}">
+		                <input type="hidden" name="login_id" value="${sessionScope.resultDTO.login_id}">
 		                <%-- <input type="hidden" name="curPage" value="${map.pager.curPage}">
 		                <input type="hidden" name="search_option" value="${map.search_option}">
 		                <input type="hidden" name="keyword" value="${map.keyword}"> --%>

@@ -5,8 +5,8 @@
 	
 <mapper namespace="admin">
 	<!-- 로그인 체크 -->
-	<select id="login_check" resultType="String">
-		SELECT login_name FROM admin
+	<select id="login_check" resultType="com.petplant.web.model.admin.dto.AdminDTO">
+		SELECT login_id, login_passwd, login_name, email, join_date FROM admin
 		WHERE login_id=#{login_id} AND login_passwd=#{login_passwd}
 	</select>
 </mapper>

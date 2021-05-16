@@ -2,7 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
- 
+ <% response.setHeader("Cache-Control", "no-store"); // HTTP 1.1.
+	response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+	response.setHeader("Expires", "0"); 
+%>
+
 <!-- path 변수 선언, request객체가 가진 쿼리 문자열 반환된 값 저장-->
 <c:set var="path" value="${pageContext.request.contextPath}" />
  

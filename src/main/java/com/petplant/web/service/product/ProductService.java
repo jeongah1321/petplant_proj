@@ -6,7 +6,6 @@ import com.petplant.web.model.product.dto.ProductDTO;
 
 public interface ProductService {
  
-    // 메서드는 DAO클래스와 동일
 	public List<ProductDTO> listAll(String search_option, String keyword,int start, int end) throws Exception; // 상품 전체 목록
 	public ProductDTO detailProduct(int product_id) throws Exception; // 상품 상세 정보
 	public void updateProduct(ProductDTO dto) throws Exception; // 상품 상세 정보 수정

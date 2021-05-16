@@ -11,12 +11,11 @@ public class BoardDTO {
     private String writer; // 작성자 아이디
     private Date regdate; // 날짜
     private int viewcnt; // 조회수
-    private String login_name; // 작성자 이름 (member 테이블과 조인할것을 고려해서 만들었음)
+    private String login_name; // 작성자 이름
     private int cnt; // 댓글 수
     private String board_show; // 게시글 삭제 상태 유무(y, n) 
     private String[] files; // 첨부파일 배열
     
-    // Getters and Setters
 	public int getBno() {
 		return bno;
 	}
@@ -78,7 +77,6 @@ public class BoardDTO {
 		this.files = files;
 	}
 	 
-    // toStirng
 	@Override
 	public String toString() {
 		return "BoardDTO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer

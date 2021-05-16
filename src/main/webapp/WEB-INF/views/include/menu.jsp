@@ -19,7 +19,7 @@
                <li><a href="${path}/">Home</a></li>
                <li><a href="${path}/info">Information</a></li>
                <li><a href="${path}/product/list.do">Plants</a></li>
-               <c:if  test="${sessionScope.login_id != null}">
+               <c:if  test="${sessionScope.resultDTO.login_id != null}">
                		<li><a href="${path}/like/list.do">Like</a></li>
                </c:if>
                <li><a href="${path}/gallery">Gallery</a></li>
@@ -28,18 +28,21 @@
 
             <!-- Icons -->
             <ul class="navbar_icons">
+            	<c:set var="login_id" value="${sessionScope.resultDTO.login_id}"/>
+            	<c:set var="login_name" value="${sessionScope.resultDTO.login_name}"/>
+            	<c:set var="admin_login_id" value="${sessionScope.aresultDTO.login_id}"/>            	
             	<c:choose>
-            		<c:when test="${sessionScope.login_id == null && sessionScope.admin_login_id == null}">
+            		<c:when test="${login_id == null && admin_login_id == null}">
 		               <li><a href="${path}/member/login.do"><i class="far fa-user"></i></a></li>
 		               <li><a href="${path}/admin/login.do"><i class="fas fa-user-cog"></i></a></li>
 		            </c:when>
 		            <c:otherwise>
-		            	<c:if test="${sessionScope.login_id != null}">
-							<strong>${sessionScope.login_name}</strong> (${sessionScope.login_id})님 로그인 &nbsp;
+		            	<c:if test="${login_id != null}">
+							<strong>${login_name}</strong> (${login_id})님 로그인 &nbsp;
 							<a href="${path}/member/logout.do"><i class="fas fa-sign-out-alt"></i></a>
 				        </c:if>
-		            	<c:if test="${sessionScope.admin_login_id != null}">
-							<strong>${sessionScope.admin_login_name}</strong>님 로그인 &nbsp;
+		            	<c:if test="${admin_login_id != null}">
+							<strong>${admin_login_id}</strong>님 로그인 &nbsp;
 							<a href="${path}/admin/logout.do"><i class="fas fa-sign-out-alt"></i></a>
 				        </c:if>						
 					</c:otherwise>

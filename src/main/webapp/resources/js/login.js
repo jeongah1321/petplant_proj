@@ -6,14 +6,10 @@ $(function(){
         if(login_id==""){
             alert("로그인 아이디를 입력하세요.");
             $("#login_id").focus();
-            return;
         }
         if(login_passwd==""){
             alert("로그인 비밀번호를 입력하세요.");
             $("#login_passwd").focus();
-            return;
         }
-        document.loginForm.action="/member/login_check.do";
-        document.loginForm.submit();
     });
 });

@@ -14,7 +14,6 @@ public class ProductDTO {
     private String picture_url;
     private MultipartFile file1;
 	
-	// Getters and Setters
     public int getProduct_id() {
 		return product_id;
 	}
@@ -70,7 +69,6 @@ public class ProductDTO {
 		this.file1 = file1;
 	}
 	
-	// toString()
 	@Override
 	public String toString() {
 		return "ProductDTO [product_id=" + product_id + ", product_name_ko=" + product_name_ko + ", product_name_en="

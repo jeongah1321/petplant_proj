@@ -10,7 +10,7 @@
 <%@ include file="../include/header.jsp" %>
 <title>login</title>
 <link rel="stylesheet" href="${path}/resources/css/login_style.css">
-<script src="${path}/resources/js/login.js" defer></script>
+<script src="${path}/resources/js/login.js?version=1.0" defer></script>
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
@@ -23,7 +23,7 @@
                </header>
                
                <section>
-                    <form name="loginForm" class="loginForm" method="POST">
+                    <form id="loginForm" name="loginForm" class="loginForm" method="POST" action="/member/login.do">
                         <div class="input-group">
 	                        <label for="loginId">아이디</label>
 							<input autocomplete="off" type="text" id="login_id" name="login_id" required="required" autofocus="autofocus" maxlength="30" placeholder="아이디 입력" />                        
@@ -51,7 +51,7 @@
 				                </div>
 				            </c:if>
                         
-                            <button type="button" id="btnLogin" value="로그인"><strong>Login</strong></button>
+                            <button type="submit" id="btnLogin" value="로그인"><strong>Login</strong></button>
 	                        
                         </div>
                     </form>
